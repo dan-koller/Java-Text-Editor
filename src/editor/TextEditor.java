@@ -7,6 +7,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.*;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,63 +24,77 @@ public class TextEditor extends JFrame {
         setSize(720, 540);
         setTitle("Java Text Editor");
 
-        // Set text area
+        // Icons
+        ImageIcon openIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/open.png")));
+        ImageIcon saveIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/save.png")));
+        ImageIcon searchIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/search.png")));
+        ImageIcon prevIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/prev.png")));
+        ImageIcon nextIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/next.png")));
+
+        // Set textarea...
         textArea = new JTextArea();
-
-        // Icons TO-DO: Fix paths on finished projects
-        String pathPrefix = "/Users/daniel/Projekte/Text Editor/Text Editor/task/src/resources/";
-
-        ImageIcon openIcon = new ImageIcon(pathPrefix + "open.png");
-        ImageIcon saveIcon = new ImageIcon(pathPrefix + "save.png");
-        ImageIcon searchIcon = new ImageIcon(pathPrefix + "search.png");
-        ImageIcon prevIcon = new ImageIcon(pathPrefix + "prev.png");
-        ImageIcon nextIcon = new ImageIcon(pathPrefix + "next.png");
-
-        // Scrollpane for textarea
+        textArea.setName("TextArea");
+        // ...and add it to the scrollpane
         JScrollPane scrollPane = new JScrollPane(textArea);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        Dimension spDimension = new Dimension(700, 400);
-        scrollPane.setPreferredSize(spDimension);
+        scrollPane.setPreferredSize(new Dimension(700, 400));
+        scrollPane.setName("ScrollPane");
 
         // Save and load buttons
         JButton saveButton = new JButton(saveIcon);
-        JButton openButton = new JButton(openIcon);
-
         saveButton.addActionListener(actionEvent -> save(textArea));
+        saveButton.setName("SaveButton");
+
+        JButton openButton = new JButton(openIcon);
         openButton.addActionListener(actionEvent -> open(textArea));
+        openButton.setName("OpenButton");
 
         // Search field
         JTextField searchField = new JTextField();
         searchField.setPreferredSize(new Dimension(260, 60));
+        searchField.setName("SearchField");
 
         // Use regex option
         JCheckBox useRegexCheckbox = new JCheckBox("Use regex?");
+        useRegexCheckbox.setName("UseRegExCheckbox");
 
         // Previous and next searches
         JButton startSearchButton = new JButton(searchIcon);
         startSearchButton.addActionListener(actionEvent -> search(textArea, searchField, useRegexCheckbox));
+        startSearchButton.setName("StartSearchButton");
+
         JButton prevMatchButton = new JButton(prevIcon);
         prevMatchButton.addActionListener(actionEvent -> prevMatch(textArea));
+        prevMatchButton.setName("PreviousMatchButton");
+
         JButton nextMatchButton = new JButton(nextIcon);
         nextMatchButton.addActionListener(actionEvent -> nextMatch(textArea));
+        nextMatchButton.setName("NextMatchButton");
 
-        // Add menubar
+        // Add menu-bar
         JMenuBar menuBar = new JMenuBar();
 
         // File menu
         JMenu fileMenu = new JMenu("File");
-        fileMenu.setMnemonic(KeyEvent.VK_F);
+        fileMenu.setMnemonic(KeyEvent.VK_F); // Only works on win32
+        fileMenu.setName("MenuFile");
 
         JMenuItem openMenuItem = new JMenuItem("Load");
-        JMenuItem saveMenuItem = new JMenuItem("Save");
-        JMenuItem exitMenuItem = new JMenuItem("Exit");
         openMenuItem.addActionListener(actionEvent -> open(textArea));
+        openMenuItem.setName("MenuOpen");
+
+        JMenuItem saveMenuItem = new JMenuItem("Save");
         saveMenuItem.addActionListener(actionEvent -> save(textArea));
+        saveMenuItem.setName("MenuSave");
+
+        JMenuItem exitMenuItem = new JMenuItem("Exit");
         exitMenuItem.addActionListener(actionEvent -> {
             System.exit(0);
         });
+        exitMenuItem.setName("MenuExit");
 
+        // Add file menu components
         fileMenu.add(openMenuItem);
         fileMenu.add(saveMenuItem);
         fileMenu.addSeparator();
@@ -87,49 +102,42 @@ public class TextEditor extends JFrame {
 
         // Search menu
         JMenu searchMenu = new JMenu("Search");
+        searchMenu.setName("MenuSearch");
 
         JMenuItem searchMenuItem = new JMenuItem("Search for entered phrase...");
-        JMenuItem prevMatchMenuItem = new JMenuItem("Previous result");
-        JMenuItem nextMatchMenuItem = new JMenuItem("Next result");
-        JMenuItem useRegexMenuItem = new JMenuItem("Enable/Disable regex");
-
         searchMenuItem.addActionListener(actionEvent -> search(textArea, searchField, useRegexCheckbox));
+        searchMenuItem.setName("MenuStartSearch");
+
+        JMenuItem prevMatchMenuItem = new JMenuItem("Previous result");
         prevMatchMenuItem.addActionListener(actionEvent -> prevMatch(textArea));
+        prevMatchMenuItem.setName("MenuPreviousMatch");
+
+        JMenuItem nextMatchMenuItem = new JMenuItem("Next result");
         nextMatchMenuItem.addActionListener(actionEvent -> nextMatch(textArea));
+        nextMatchMenuItem.setName("MenuNextMatch");
+
+        JMenuItem useRegexMenuItem = new JMenuItem("Enable/Disable regex");
         useRegexMenuItem.addActionListener(actionEvent -> {
             useRegexCheckbox.setSelected(!useRegexCheckbox.isSelected());
         });
+        useRegexMenuItem.setName("MenuUseRegExp");
 
+        // Add search menu components
         searchMenu.add(searchMenuItem);
+        searchMenu.addSeparator();
         searchMenu.add(prevMatchMenuItem);
         searchMenu.add(nextMatchMenuItem);
+        searchMenu.addSeparator();
         searchMenu.add(useRegexMenuItem);
 
-        // Add components to menubar
+        // Add components to menu-bar
         menuBar.add(fileMenu);
         menuBar.add(searchMenu);
         setJMenuBar(menuBar);
 
-        // Set component names
-        textArea.setName("TextArea");
-        searchField.setName("SearchField");
-        saveButton.setName("SaveButton");
-        openButton.setName("OpenButton");
-        startSearchButton.setName("StartSearchButton");
-        prevMatchButton.setName("PreviousMatchButton");
-        nextMatchButton.setName("NextMatchButton");
-        useRegexCheckbox.setName("UseRegExCheckbox");
+        // Create an invisible FileChooser instance
+        fileChooser.setVisible(false);
         fileChooser.setName("FileChooser");
-        scrollPane.setName("ScrollPane");
-        fileMenu.setName("MenuFile");
-        searchMenu.setName("MenuSearch");
-        openMenuItem.setName("MenuOpen");
-        saveMenuItem.setName("MenuSave");
-        exitMenuItem.setName("MenuExit");
-        searchMenuItem.setName("MenuStartSearch");
-        prevMatchMenuItem.setName("MenuPreviousMatch");
-        nextMatchMenuItem.setName("MenuNextMatch");
-        useRegexMenuItem.setName("MenuUseRegExp");
 
         // Place components
         JPanel menuPanel = new JPanel();
@@ -140,10 +148,7 @@ public class TextEditor extends JFrame {
         menuPanel.add(prevMatchButton);
         menuPanel.add(nextMatchButton);
         menuPanel.add(useRegexCheckbox);
-
-        // Only for testing purposes
-        fileChooser.setVisible(false);
-        menuPanel.add(fileChooser);
+        menuPanel.add(fileChooser); // optional, it's hidden anyway
 
         JPanel editorPanel = new JPanel();
         editorPanel.add(scrollPane);
@@ -315,7 +320,6 @@ public class TextEditor extends JFrame {
     // Create an invisible border to properly align components
     private static void setMargin(JComponent aComponent, int aTop, int aRight, int aBottom, int aLeft) {
         Border border = aComponent.getBorder();
-
         Border marginBorder = new EmptyBorder(new Insets(aTop, aLeft, aBottom, aRight));
         aComponent.setBorder(border == null ? marginBorder : new CompoundBorder(marginBorder, border));
     }
