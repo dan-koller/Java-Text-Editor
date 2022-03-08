@@ -92,19 +92,19 @@ public class TextEditor extends JFrame {
         saveMenuItem.addActionListener(actionEvent -> save(textArea));
         saveMenuItem.setName("MenuSave");
 
-        JMenuItem exitMenuItem = new JMenuItem("Quit");
-        exitMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q,
+        JMenuItem quitMenuItem = new JMenuItem("Quit");
+        quitMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q,
                 Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
-        exitMenuItem.addActionListener(actionEvent -> {
+        quitMenuItem.addActionListener(actionEvent -> {
             System.exit(0);
         });
-        exitMenuItem.setName("MenuExit");
+        quitMenuItem.setName("MenuExit");
 
         // Add file menu components
         fileMenu.add(openMenuItem);
         fileMenu.add(saveMenuItem);
         fileMenu.addSeparator();
-        fileMenu.add(exitMenuItem);
+        fileMenu.add(quitMenuItem);
 
         // Search menu
         JMenu searchMenu = new JMenu("Search");
