@@ -80,15 +80,21 @@ public class TextEditor extends JFrame {
         fileMenu.setMnemonic(KeyEvent.VK_F); // Only works on win32
         fileMenu.setName("MenuFile");
 
-        JMenuItem openMenuItem = new JMenuItem("Load");
+        JMenuItem openMenuItem = new JMenuItem("Open");
+        openMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,
+                Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
         openMenuItem.addActionListener(actionEvent -> open(textArea));
         openMenuItem.setName("MenuOpen");
 
         JMenuItem saveMenuItem = new JMenuItem("Save");
+        saveMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
+                Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
         saveMenuItem.addActionListener(actionEvent -> save(textArea));
         saveMenuItem.setName("MenuSave");
 
-        JMenuItem exitMenuItem = new JMenuItem("Exit");
+        JMenuItem exitMenuItem = new JMenuItem("Quit");
+        exitMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q,
+                Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
         exitMenuItem.addActionListener(actionEvent -> {
             System.exit(0);
         });
@@ -105,18 +111,26 @@ public class TextEditor extends JFrame {
         searchMenu.setName("MenuSearch");
 
         JMenuItem searchMenuItem = new JMenuItem("Search for entered phrase...");
+        searchMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F,
+                Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
         searchMenuItem.addActionListener(actionEvent -> search(textArea, searchField, useRegexCheckbox));
         searchMenuItem.setName("MenuStartSearch");
 
         JMenuItem prevMatchMenuItem = new JMenuItem("Previous result");
+        prevMatchMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B,
+                Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
         prevMatchMenuItem.addActionListener(actionEvent -> prevMatch(textArea));
         prevMatchMenuItem.setName("MenuPreviousMatch");
 
         JMenuItem nextMatchMenuItem = new JMenuItem("Next result");
+        nextMatchMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
+                Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
         nextMatchMenuItem.addActionListener(actionEvent -> nextMatch(textArea));
         nextMatchMenuItem.setName("MenuNextMatch");
 
         JMenuItem useRegexMenuItem = new JMenuItem("Enable/Disable regex");
+        useRegexMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R,
+                Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
         useRegexMenuItem.addActionListener(actionEvent -> {
             useRegexCheckbox.setSelected(!useRegexCheckbox.isSelected());
         });
