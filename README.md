@@ -2,6 +2,8 @@
 A small and convenient editor based on Java with allows basic text manipulation and (regex) searching.
 I built this project in order to learn more about Javas Swing Library.
 
+![Screenshot of the text editor](./src/resources/screenshot-editor.png)
+
 ## Technologies
 - Java
 - Swing
