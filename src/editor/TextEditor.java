@@ -110,7 +110,7 @@ public class TextEditor extends JFrame {
         JMenu searchMenu = new JMenu("Search");
         searchMenu.setName("MenuSearch");
 
-        JMenuItem searchMenuItem = new JMenuItem("Search for entered phrase...");
+        JMenuItem searchMenuItem = new JMenuItem("Search file...");
         searchMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F,
                 Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
         searchMenuItem.addActionListener(actionEvent -> search(textArea, searchField, useRegexCheckbox));
@@ -128,7 +128,7 @@ public class TextEditor extends JFrame {
         nextMatchMenuItem.addActionListener(actionEvent -> nextMatch(textArea));
         nextMatchMenuItem.setName("MenuNextMatch");
 
-        JMenuItem useRegexMenuItem = new JMenuItem("Enable/Disable regex");
+        JMenuItem useRegexMenuItem = new JMenuItem("Toggle regex");
         useRegexMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R,
                 Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
         useRegexMenuItem.addActionListener(actionEvent -> {

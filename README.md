@@ -11,6 +11,10 @@ I built this project in order to learn more about Javas Swing Library.
 ## How to use
 Just clone the repository and start the `ApplicationRunner` class or download the compiled .jar file.
 
+## Features
+- Search for normal and regex strings
+- Access essential menus and options with convenient keyboard shortcuts
+
 ## Roadmap
 - Toggle dark-mode
 - Add an optional file-browser on the side
